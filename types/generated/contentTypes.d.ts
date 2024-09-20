@@ -590,6 +590,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -695,7 +742,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -724,6 +770,33 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    firstname: Attribute.String & Attribute.Required;
+    lastname: Attribute.String & Attribute.Required;
+    orders: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::order.order'
+    >;
+    wishlist: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::wishlist.wishlist'
+    >;
+    tickets: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::ticket.ticket'
+    >;
+    messages: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::message.message'
+    >;
+    reviews: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::review.review'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -741,46 +814,416 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
+export interface ApiArtistArtist extends Schema.CollectionType {
+  collectionName: 'artists';
   info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
+    singularName: 'artist';
+    pluralName: 'artists';
+    displayName: 'Artist';
     description: '';
   };
   options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
+    draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
+    firstname: Attribute.String & Attribute.Required;
+    lastname: Attribute.String & Attribute.Required;
+    username: Attribute.String & Attribute.Required;
+    password: Attribute.Password &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 10;
+      }>;
+    confirmPassword: Attribute.Password & Attribute.Required;
+    email: Attribute.Email & Attribute.Required & Attribute.Unique;
+    products: Attribute.Relation<
+      'api::artist.artist',
+      'manyToMany',
+      'api::product.product'
+    >;
+    profilePicture: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::artist.artist',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::artist.artist',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'Category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categoryTitle: Attribute.String;
+    products: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::product.product'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiEventEvent extends Schema.CollectionType {
+  collectionName: 'events';
+  info: {
+    singularName: 'event';
+    pluralName: 'events';
+    displayName: 'Event';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    eventTitle: Attribute.String;
+    eventDescription: Attribute.Text;
+    location: Attribute.String;
+    created: Attribute.DateTime;
+    endingAt: Attribute.DateTime;
+    eventImage: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    tickets: Attribute.Relation<
+      'api::event.event',
+      'oneToMany',
+      'api::ticket.ticket'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::event.event',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::event.event',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMessageMessage extends Schema.CollectionType {
+  collectionName: 'messages';
+  info: {
+    singularName: 'message';
+    pluralName: 'messages';
+    displayName: 'Message';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    messageTitle: Attribute.String;
+    messageDescription: Attribute.Text;
+    users_permissions_user: Attribute.Relation<
+      'api::message.message',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiOrderOrder extends Schema.CollectionType {
+  collectionName: 'orders';
+  info: {
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'Order';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    users_permissions_user: Attribute.Relation<
+      'api::order.order',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    products: Attribute.Relation<
+      'api::order.order',
+      'manyToMany',
+      'api::product.product'
+    >;
+    payment: Attribute.Relation<
+      'api::order.order',
+      'manyToOne',
+      'api::payment.payment'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPaymentPayment extends Schema.CollectionType {
+  collectionName: 'payments';
+  info: {
+    singularName: 'payment';
+    pluralName: 'payments';
+    displayName: 'Payment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    orders: Attribute.Relation<
+      'api::payment.payment',
+      'oneToMany',
+      'api::order.order'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    productTitle: Attribute.String;
+    price: Attribute.Integer;
+    description: Attribute.Text;
+    productImage: Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    artists: Attribute.Relation<
+      'api::product.product',
+      'manyToMany',
+      'api::artist.artist'
+    >;
+    category: Attribute.Relation<
+      'api::product.product',
+      'manyToOne',
+      'api::category.category'
+    >;
+    orders: Attribute.Relation<
+      'api::product.product',
+      'manyToMany',
+      'api::order.order'
+    >;
+    wishlists: Attribute.Relation<
+      'api::product.product',
+      'manyToMany',
+      'api::wishlist.wishlist'
+    >;
+    reviews: Attribute.Relation<
+      'api::product.product',
+      'oneToMany',
+      'api::review.review'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReviewReview extends Schema.CollectionType {
+  collectionName: 'reviews';
+  info: {
+    singularName: 'review';
+    pluralName: 'reviews';
+    displayName: 'Review';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    review: Attribute.Text;
+    product: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'api::product.product'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::review.review',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::review.review',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTicketTicket extends Schema.CollectionType {
+  collectionName: 'tickets';
+  info: {
+    singularName: 'ticket';
+    pluralName: 'tickets';
+    displayName: 'Ticket';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ticketTitle: Attribute.String;
+    ticketPrice: Attribute.Integer;
+    event: Attribute.Relation<
+      'api::ticket.ticket',
+      'manyToOne',
+      'api::event.event'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::ticket.ticket',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::ticket.ticket',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::ticket.ticket',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiWishlistWishlist extends Schema.CollectionType {
+  collectionName: 'wishlists';
+  info: {
+    singularName: 'wishlist';
+    pluralName: 'wishlists';
+    displayName: 'Wishlist';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    users_permissions_users: Attribute.Relation<
+      'api::wishlist.wishlist',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    products: Attribute.Relation<
+      'api::wishlist.wishlist',
+      'manyToMany',
+      'api::product.product'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::wishlist.wishlist',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::wishlist.wishlist',
       'oneToOne',
       'admin::user'
     > &
@@ -802,10 +1245,20 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
+      'api::artist.artist': ApiArtistArtist;
+      'api::category.category': ApiCategoryCategory;
+      'api::event.event': ApiEventEvent;
+      'api::message.message': ApiMessageMessage;
+      'api::order.order': ApiOrderOrder;
+      'api::payment.payment': ApiPaymentPayment;
+      'api::product.product': ApiProductProduct;
+      'api::review.review': ApiReviewReview;
+      'api::ticket.ticket': ApiTicketTicket;
+      'api::wishlist.wishlist': ApiWishlistWishlist;
     }
   }
 }
