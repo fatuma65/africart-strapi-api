@@ -1,6 +1,40 @@
-# 🚀 Getting started with Strapi
+# 🎨  AfriCart
+Welcome to the official repository for the African Art Products Website! This project is a dynamic content management system (CMS) built with Strapi, designed to showcase and sell unique African art products, celebrating the continent's diverse artistic heritage.
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+## 🌍 Project Overview
+AfriCart serves as a digital platform where artists and art enthusiasts from across Africa can present and purchase authentic African art. From traditional crafts to contemporary artworks, this Strapi-powered backend efficiently manages all content, user authentication, orders, and more.
+
+## Key Features
+### Art Product Management:
+Seamlessly manage a wide range of art products including paintings, sculptures, textiles, and more.
+### User Authentication: 
+Secure login and registration for artists, buyers, and administrators.
+### Order & Inventory Management:
+Keep track of orders, manage inventory, and handle transactions efficiently.
+### Content Management:
+Easily create and manage blog posts, artist profiles, product descriptions, and other content.
+### Multi-language Support:
+Tailor the experience for a global audience by supporting multiple languages.
+### Email Notifications:
+Automated emails for user registrations, order updates, and other communications.
+## 🛠️ Technologies Used
+### Strapi: 
+The headless CMS that powers the backend of the application.
+### Node.js: 
+The runtime environment for building scalable server-side applications.
+### PostgreSQL:
+Database for storing content and user data.
+
+
+## 📦 Installation
+To run this project locally, follow these steps:
+
+## Prerequisites
+### Node.js (v14 or above)
+npm or yarn
+
+## 1. Clone the Repository
+https://github.com/fatuma65/africart-strapi-api.git
 
 ### `develop`
 
