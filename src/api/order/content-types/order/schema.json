@@ -4,7 +4,8 @@
   "info": {
     "singularName": "order",
     "pluralName": "orders",
-    "displayName": "Order"
+    "displayName": "Order",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -28,6 +29,25 @@
       "relation": "manyToOne",
       "target": "api::payment.payment",
       "inversedBy": "orders"
+    },
+    "order_date": {
+      "type": "datetime"
+    },
+    "total_amount": {
+      "type": "integer"
+    },
+    "shipping_address": {
+      "type": "text"
+    },
+    "order_status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "processing",
+        "shipped",
+        "completed",
+        "cancelled"
+      ]
     }
   }
 }

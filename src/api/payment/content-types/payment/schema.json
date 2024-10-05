@@ -4,7 +4,8 @@
   "info": {
     "singularName": "payment",
     "pluralName": "payments",
-    "displayName": "Payment"
+    "displayName": "Payment",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,6 +17,34 @@
       "relation": "oneToMany",
       "target": "api::order.order",
       "mappedBy": "payment"
+    },
+    "Amount": {
+      "type": "integer"
+    },
+    "Currency": {
+      "type": "string"
+    },
+    "payment_status": {
+      "type": "enumeration",
+      "enum": [
+        "Pending",
+        "Succeeded",
+        "Failed",
+        "Cancelled"
+      ]
+    },
+    "payment_method": {
+      "type": "string",
+      "default": "credit_card"
+    },
+    "payment_date": {
+      "type": "datetime"
+    },
+    "customer_email": {
+      "type": "email"
+    },
+    "stripe_client_secret": {
+      "type": "text"
     }
   }
 }
