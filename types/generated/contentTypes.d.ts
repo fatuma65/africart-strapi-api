@@ -978,6 +978,7 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     singularName: 'order';
     pluralName: 'orders';
     displayName: 'Order';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -997,6 +998,12 @@ export interface ApiOrderOrder extends Schema.CollectionType {
       'api::order.order',
       'manyToOne',
       'api::payment.payment'
+    >;
+    order_date: Attribute.DateTime;
+    total_amount: Attribute.Integer;
+    shipping_address: Attribute.Text;
+    order_status: Attribute.Enumeration<
+      ['pending', 'processing', 'shipped', 'completed', 'cancelled']
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1022,6 +1029,7 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
     singularName: 'payment';
     pluralName: 'payments';
     displayName: 'Payment';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1032,6 +1040,15 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
       'oneToMany',
       'api::order.order'
     >;
+    Amount: Attribute.Integer;
+    Currency: Attribute.String;
+    payment_status: Attribute.Enumeration<
+      ['Pending', 'Succeeded', 'Failed', 'Cancelled']
+    >;
+    payment_method: Attribute.String & Attribute.DefaultTo<'credit_card'>;
+    payment_date: Attribute.DateTime;
+    customer_email: Attribute.Email;
+    stripe_client_secret: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
