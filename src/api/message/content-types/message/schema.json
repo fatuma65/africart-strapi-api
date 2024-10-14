@@ -4,24 +4,22 @@
   "info": {
     "singularName": "message",
     "pluralName": "messages",
-    "displayName": "Message"
+    "displayName": "Message",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "messageTitle": {
-      "type": "string"
-    },
     "messageDescription": {
       "type": "text"
     },
-    "users_permissions_user": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "messages"
+    "email": {
+      "type": "email"
+    },
+    "name": {
+      "type": "string"
     }
   }
 }
