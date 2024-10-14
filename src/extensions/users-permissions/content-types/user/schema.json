@@ -91,12 +91,6 @@
       "target": "api::ticket.ticket",
       "mappedBy": "users_permissions_user"
     },
-    "messages": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::message.message",
-      "mappedBy": "users_permissions_user"
-    },
     "reviews": {
       "type": "relation",
       "relation": "oneToMany",

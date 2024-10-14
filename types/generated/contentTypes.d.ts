@@ -787,11 +787,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::ticket.ticket'
     >;
-    messages: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToMany',
-      'api::message.message'
-    >;
     reviews: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',
@@ -942,18 +937,15 @@ export interface ApiMessageMessage extends Schema.CollectionType {
     singularName: 'message';
     pluralName: 'messages';
     displayName: 'Message';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    messageTitle: Attribute.String;
     messageDescription: Attribute.Text;
-    users_permissions_user: Attribute.Relation<
-      'api::message.message',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
+    email: Attribute.Email;
+    name: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
