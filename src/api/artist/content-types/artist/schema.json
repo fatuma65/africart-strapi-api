@@ -12,32 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "firstname": {
-      "type": "string",
-      "required": true
-    },
-    "lastname": {
-      "type": "string",
-      "required": true
-    },
-    "username": {
-      "type": "string",
-      "required": true
-    },
-    "password": {
-      "type": "password",
-      "required": true,
-      "maxLength": 10
-    },
-    "confirmPassword": {
-      "type": "password",
-      "required": true
-    },
-    "email": {
-      "type": "email",
-      "required": true,
-      "unique": true
-    },
     "products": {
       "type": "relation",
       "relation": "manyToMany",
@@ -45,14 +19,21 @@
       "inversedBy": "artists"
     },
     "profilePicture": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "artist"
     }
   }
 }

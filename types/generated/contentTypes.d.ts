@@ -792,6 +792,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::review.review'
     >;
+    profilePicture: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    artist: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::artist.artist'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -821,22 +827,17 @@ export interface ApiArtistArtist extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    firstname: Attribute.String & Attribute.Required;
-    lastname: Attribute.String & Attribute.Required;
-    username: Attribute.String & Attribute.Required;
-    password: Attribute.Password &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        maxLength: 10;
-      }>;
-    confirmPassword: Attribute.Password & Attribute.Required;
-    email: Attribute.Email & Attribute.Required & Attribute.Unique;
     products: Attribute.Relation<
       'api::artist.artist',
       'manyToMany',
       'api::product.product'
     >;
     profilePicture: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    users_permissions_user: Attribute.Relation<
+      'api::artist.artist',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
