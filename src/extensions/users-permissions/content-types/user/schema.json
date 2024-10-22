@@ -96,6 +96,22 @@
       "relation": "oneToMany",
       "target": "api::review.review",
       "mappedBy": "users_permissions_user"
+    },
+    "profilePicture": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "artist": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::artist.artist",
+      "mappedBy": "users_permissions_user"
     }
   }
 }
