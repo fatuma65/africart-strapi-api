@@ -18,17 +18,6 @@
       "target": "api::product.product",
       "inversedBy": "artists"
     },
-    "profilePicture": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "users_permissions_user": {
       "type": "relation",
       "relation": "oneToOne",

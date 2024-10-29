@@ -98,20 +98,24 @@
       "mappedBy": "users_permissions_user"
     },
     "profilePicture": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "artist": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::artist.artist",
       "mappedBy": "users_permissions_user"
+    },
+    "is_artist": {
+      "type": "boolean"
     }
   }
 }
