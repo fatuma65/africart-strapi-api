@@ -798,6 +798,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToOne',
       'api::artist.artist'
     >;
+    is_artist: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -832,7 +833,6 @@ export interface ApiArtistArtist extends Schema.CollectionType {
       'manyToMany',
       'api::product.product'
     >;
-    profilePicture: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     users_permissions_user: Attribute.Relation<
       'api::artist.artist',
       'oneToOne',
