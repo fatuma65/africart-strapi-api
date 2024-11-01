@@ -115,7 +115,8 @@
       "mappedBy": "users_permissions_user"
     },
     "is_artist": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     }
   }
 }
