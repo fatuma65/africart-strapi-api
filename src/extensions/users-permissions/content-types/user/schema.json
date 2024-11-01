@@ -116,7 +116,8 @@
     },
     "is_artist": {
       "type": "boolean",
-      "default": false
+      "default": false,
+      "required": true
     }
   }
 }

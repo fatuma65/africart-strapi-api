@@ -798,7 +798,9 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToOne',
       'api::artist.artist'
     >;
-    is_artist: Attribute.Boolean & Attribute.DefaultTo<false>;
+    is_artist: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
