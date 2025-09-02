@@ -7,7 +7,8 @@ module.exports = [
     config: {
       cors: {
          // Allow your frontend origin
-        origin: ["http://localhost:5173"],
+        origin: ["http://localhost:5173", "https://africart-strapi-api.onrender.com"],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       },
       contentSecurityPolicy: {
         useDefaults: true,

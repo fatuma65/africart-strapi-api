@@ -13,6 +13,12 @@ module.exports = ({ env }) => ({
         upload: {},
         delete: {},
       },
+      'strapi-stripe': {
+        enabled: true,
+        config: {
+          stripeSecretKey: env('STRIPE_SECRET_KEY'),
+        },
+      },
     },
   },
   // ...
